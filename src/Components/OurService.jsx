@@ -22,7 +22,7 @@ const OurService = () => {
                 <h1 className='text-2xl font-bold uppercase'>Electro  Gastrology Therapy</h1>
                 <p className='!mt-6'>Experience exceptional dental care where precision meets comfort. Our expert team is dedicated to providing healthy, radiant smiles through advanced treatments and personalized care.</p>
                 <p>Providing top-quality dental solutions with precision and care, ensuring healthy, confident smiles through expert treatments and advanced technology.</p>
-                <button className='btn btn-outline hover:bg-[#F7A582] text-[#F7A582]'>More Details</button>
+                <a href='https://en.wikipedia.org/wiki/Electrogastrogram' className='btn btn-outline hover:bg-[#F7A582] text-[#F7A582]'>More Details</a>
             </div>
         </div>
     );

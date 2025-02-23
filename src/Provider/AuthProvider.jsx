@@ -1,11 +1,13 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { app } from "../Firebase/firebase.config";
 import { createContext, useEffect, useState } from "react";
+import useAxiosPublic from "../Components/Hooks/useAxiosPublic";
 
 const auth = getAuth(app)
 export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
+    const axiosPublic = useAxiosPublic()
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -22,20 +24,49 @@ const AuthProvider = ({ children }) => {
     }
 
     //log out
-    const logOut = () =>{
+    const logOut = () => {
         return signOut(auth)
+    }
+
+    //update user perofile
+    const updateUserProfile = ({ name, photo }) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo
+        });
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            //change
+            if (currentUser) {
+                const userInfo = { email: currentUser.email }
+                axiosPublic.post('/jwt', userInfo)
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token)
+                        }
+                    })
+            }
+            else {
+                localStorage.removeItem('access-token')
+            }
             console.log('Current User:', currentUser)
             setLoading(false)
         });
         return () => {
             return unsubscribe();
         }
-    }, [])
+    }, [axiosPublic])
+    //*********************
+
+    //         console.log('Current User:', currentUser)
+    //         setLoading(false)
+    //     });
+    //     return () => {
+    //         return unsubscribe();
+    //     }
+    // }, [])
 
 
     const info = {
@@ -45,6 +76,7 @@ const AuthProvider = ({ children }) => {
         setUser,
         login,
         logOut,
+        updateUserProfile,
     }
 
     return (

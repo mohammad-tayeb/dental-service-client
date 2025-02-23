@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import logoDark from '../assets/logoDark.png'
 const Footer = () => {
     return (
@@ -8,7 +9,7 @@ const Footer = () => {
                     <p className='md:w-80 w-full text-center md:text-start'>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. has been since the printer took.
                     </p>
-                    <button className='btn btn-outline hover:bg-[#F7A582] text-[#F7A582]'>Appointment</button>
+                    <Link className='btn btn-outline hover:bg-[#F7A582] text-[#F7A582]' to="/appointment">Appointment</Link>
                 </aside>
                 <nav>
                     <h6 className="footer-title">Quick Links</h6>

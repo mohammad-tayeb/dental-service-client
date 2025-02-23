@@ -4,9 +4,12 @@ import plus from '../assets/plus.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import useAxiosSecure from '../Components/Hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet-async';
 const SignUp = () => {
 
-    const { createUser, setUser } = useContext(AuthContext)
+    const { createUser, setUser, updateUserProfile } = useContext(AuthContext)
+    const axiosSecure = useAxiosSecure()
     const navigate = useNavigate()
     const handleSignUp = e => {
         e.preventDefault()
@@ -15,20 +18,41 @@ const SignUp = () => {
         const userName = form.userName.value;
         const email = form.email.value;
         const password = form.password.value;
+        const photoURL = form.photoURL?.value;
         const userInfo = { name, userName, email, password }
         console.log(userInfo)
         createUser(email, password)
             .then(result => {
                 console.log(result.user)
+                //update profile
+                updateUserProfile({ name, photo: photoURL })
+                    .then(() => { console.log('User profile updated'); })
+                    .catch((error) => { console.log(error); });
+                //update profile
+
+                // send to backend
+                axiosSecure.post('/users', userInfo)
+                    .then(res => {
+                        console.log(res.data)
+                    })
+                    .then(error => {
+                        console.log(error)
+                    })
+                // send to backend
+
                 setUser(result.user)
                 navigate('/')
             })
             .catch(error => {
                 console.log(error)
+                alert(error)
             })
     }
     return (
         <div className='flex md:flex-row flex-col'>
+            <Helmet>
+                <title>Sign Up | Doc House</title>
+            </Helmet>
             {/* Left Side */}
             <div className='md:w-1/2 w-full'>
                 <img className='h-screen w-full' src={ls} alt="" />
@@ -47,7 +71,7 @@ const SignUp = () => {
                 <label htmlFor="">Password</label>
                 <input required type="text" placeholder="password" name="password" className="text-white input input-bordered w-full md:max-w-xs" />
                 <span className='text-[#F7A582] text-xs hover:underline'><a href="">Forgot Password</a></span>
-                <button className='btn btn-outline w-full text-white bg-[#F7A582] border-0 hover:bg-[#ff9e7a]'>Login</button>
+                <button className='btn btn-outline w-full text-white bg-[#F7A582] border-0 hover:bg-[#ff9e7a]'>Sign In</button>
                 <span className='pb-4'>Already Have an Account? <Link to="/login" className='font-bold text-[#F7A582]'>Login</Link></span>
             </form>
         </div>

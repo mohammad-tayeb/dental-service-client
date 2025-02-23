@@ -4,6 +4,8 @@ import plus from '../assets/plus.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
 
@@ -25,11 +27,20 @@ const Login = () => {
 
             })
             .catch(error => {
-                console.log(error)
-            })
+                const errorMessage = error.message.split('/')[1].split(')')[0];
+                Swal.fire({
+                    icon: "error",
+                    title: `<h2 class="uppercase">${errorMessage}</h2>`,
+                    text: "Something went wrong!",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                });
+            });
     }
     return (
         <div className='flex md:flex-row flex-col'>
+            <Helmet>
+                <title>Login | Doc House</title>
+            </Helmet>
             {/* Left Side */}
             <div className='md:w-1/2 w-full'>
                 <img className='h-screen w-full' src={ls} alt="" />

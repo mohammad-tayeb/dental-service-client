@@ -6,12 +6,14 @@ import HomePageCards from "../Components/HomePageCards";
 import HomePageHeading from "../Components/HomePageHeading";
 import OurService from "../Components/OurService";
 import ReviewSection from "../Components/ReviewSection";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Simulate ReviewSection loading
+        window.scrollTo(0, 0);
         const timer = setTimeout(() => {
             setLoading(false);
         }, 1000); // Adjust timing if necessary
@@ -21,6 +23,9 @@ const Home = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Home | Doc House</title>
+            </Helmet>
             <HomeBanner />
             <OurService />
             <HomePageCards />

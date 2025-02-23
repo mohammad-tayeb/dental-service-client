@@ -9,6 +9,15 @@ import DoctorInfo from "../Pages/DoctorInfo";
 import ErrorPage from "../Pages/errorPage";
 import Appointment from "../Pages/Appointment";
 import Slot from "../Components/Slot";
+import MyAppointments from "../Pages/MyAppointments";
+import AdminDashboard from "../Pages/AdminDashboard";
+import Dashboard from "../Pages/Dashboard";
+import Users from "../Pages/Users";
+import AddDoctor from "../Pages/AddDoctor";
+import ManageDoctors from "../Pages/ManageDoctors";
+import About from "../Pages/About";
+import AdminRoute from "./AdminRoute";
+import AllServices from "../Pages/AllServices";
 
 
 export const router = createBrowserRouter([
@@ -36,6 +45,18 @@ export const router = createBrowserRouter([
             },
           },
         ]
+      },
+      {
+        path: "/myAppointments",
+        element: <MyAppointments></MyAppointments>
+      },
+      {
+        path: "/about",
+        element: <About></About>
+      },
+      {
+        path: "/allServices",
+        element: <AllServices></AllServices>
       }
     ]
   },
@@ -51,4 +72,26 @@ export const router = createBrowserRouter([
     path: "*",
     element: <ErrorPage></ErrorPage>
   },
+  {
+    path: "/adminDashboard",
+    element: <AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>,
+    children: [
+      {
+        path: "dashboard", // Fix: No leading "/"
+        element: <Dashboard></Dashboard>
+      },
+      {
+        path: "users", // Fix: No leading "/"
+        element: <Users></Users>
+      },
+      {
+        path: "addDoctor",
+        element: <AddDoctor></AddDoctor>
+      },
+      {
+        path: "manageDoctors",
+        element: <ManageDoctors></ManageDoctors>
+      }
+    ]
+  }
 ]);

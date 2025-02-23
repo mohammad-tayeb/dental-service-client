@@ -1,19 +1,57 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 // for popup form
 import 'reactjs-popup/dist/index.css';
+import useAxiosPublic from "./Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
+import { DateContext } from "../Provider/DateProvider";
 
 
 const Slot = () => {
+    const { user } = useContext(AuthContext)
+    const { selectedDate } = useContext(DateContext);
     const slot = useLoaderData()
     const category = useParams()
     const [selectedService, setSelectedService] = useState(null);
+    const axiosPublic = useAxiosPublic()
 
     const handleFormSubmission = (service) => {
         setSelectedService(service); // Set clicked service details
         document.getElementById('my_modal_1').showModal(); // Open modal
+
     };
 
+    const handleAppointmentSubmission = (e) => {
+        e.preventDefault()
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const serviceName = selectedService.name
+        const serviceSchedle = selectedService.schedule
+        const userInfo = { name, email, serviceName, serviceSchedle, selectedDate}
+        console.log(userInfo)
+        axiosPublic.post('/appointments', userInfo)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.insertedId) {
+                    document.getElementById('my_modal_1').close(); // Close the modal
+                    Swal.fire({
+                        title: "Appointment Scheduled!",
+                        icon: "success",
+                        draggable: true
+                    });
+                    form.reset();
+                }
+                else {
+                    document.getElementById('my_modal_1').close(); // Close the modal
+                    Swal.fire({
+                        icon: "warning",
+                        text: `${res.data.message}`,
+                    });
+                }
+            })
+    }
     return (
         <div className="mt-20 text-center">
             <h2 className='text-4xl font-bold text-black text-center'>Available slots for Teeth {category.category}.</h2>
@@ -33,14 +71,14 @@ const Slot = () => {
             <dialog id="my_modal_1" className="modal">
                 <div className="modal-box bg-white">
                     {selectedService && (
-                        <form className="space-y-3 py-5 flex flex-col items-center justify-center">
+                        <form onSubmit={handleAppointmentSubmission} className="space-y-3 py-5 flex flex-col items-center justify-center">
                             <input type="text" className="input input-bordered w-full bg-gray-100 max-w-xs text-black" readOnly value={selectedService.name} />
 
                             <input type="text" className="input input-bordered w-full bg-gray-100 max-w-xs text-black" readOnly value={selectedService.schedule} />
 
-                            <input type="text" required className="input input-bordered w-full bg-gray-100 max-w-xs text-black" placeholder="Name"/>
+                            <input type="text" name="name" required className="input input-bordered w-full bg-gray-100 max-w-xs text-black" placeholder="Name" />
 
-                            <input type="email" required className="input input-bordered w-full bg-gray-100 max-w-xs text-black" placeholder="Email"/>
+                            <input type="email" required name="email" className="input input-bordered w-full bg-gray-100 max-w-xs text-black" value={user?.email} placeholder="Email" />
 
                             <button className="btn block w-80 bg-[#F7A582] hover:bg-[#f2966e] text-white border-0">Submit</button>
                         </form>

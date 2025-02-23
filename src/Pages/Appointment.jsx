@@ -4,7 +4,7 @@ import g7 from '../assets/Group 7.png'
 import chair from '../assets/chair 1.png'
 
 // for claender
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 // service icon
@@ -15,11 +15,14 @@ import ic4 from '../assets/Service-Icon/Group 34997.png'
 import ic5 from '../assets/Service-Icon/Group 34998.png'
 import ic6 from '../assets/Service-Icon/Group 34999.png'
 import { Link, Outlet } from 'react-router-dom';
+import { DateContext } from '../Provider/DateProvider';
 
 const Appointment = () => {
     // for calender
     const [value, setValue] = useState(new Date());
-    console.log(value)
+    const { selectedDate, setSelectedDate } = useContext(DateContext);
+    setSelectedDate(value.toDateString())
+    console.log(selectedDate)
     return (
         <div>
             <img className='md:h-[500px] h-[254px]' src={rs} alt="" />
@@ -35,7 +38,7 @@ const Appointment = () => {
                 {/* calender */}
                 <div className="flex flex-col items-center">
                     <h2 className="text-2xl font-bold mb-4">Select a Date</h2>
-                    <Calendar onChange={setValue} value={value} />
+                    <Calendar minDate={new Date()} onChange={setValue} value={value} />
                     <p className="mt-4">Selected Date: {value.toDateString()}</p>
                 </div>
                 {/* chair image */}

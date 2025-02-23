@@ -9,12 +9,14 @@ import { FaStar } from 'react-icons/fa6';
 // for tabs
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { Helmet } from 'react-helmet-async';
 
 const DoctorInfo = () => {
     const { id } = useParams();
     const [doctor, setDoctor] = useState([])
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetch(`http://localhost:5000/doctors/${id}`)
             .then(res => res.json())
             .then(data => {
@@ -24,6 +26,9 @@ const DoctorInfo = () => {
     }, [id])
     return (
         <div className="">
+            <Helmet>
+                <title>Doctor Info | Doc House</title>
+            </Helmet>
             <img className='md:h-[500px] h-[254px]' src={rs} alt="" />
             <img className='absolute top-20 md:right-2/4' src={g6} alt="" />
             {/* <img className='absolute bottom-1 left-40' src={g6} alt="" /> */}
@@ -156,52 +161,52 @@ const DoctorInfo = () => {
 
                         <div className="space-y-4 grid grid-cols-3 gap-10">
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Great service and friendly staff!"</p>
+                                <p className="text-gray-800">Great service and friendly staff!</p>
                                 <span className="text-sm text-gray-500">- John D.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Loved the atmosphere. Will come again!"</p>
+                                <p className="text-gray-800">Loved the atmosphere. Will come again!</p>
                                 <span className="text-sm text-gray-500">- Sarah L.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Affordable prices and top-notch quality."</p>
+                                <p className="text-gray-800">Affordable prices and top-notch quality.</p>
                                 <span className="text-sm text-gray-500">- Mike T.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Super quick service. Highly recommend!"</p>
+                                <p className="text-gray-800">Super quick service. Highly recommend!</p>
                                 <span className="text-sm text-gray-500">- Emma R.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Staff was very helpful and professional."</p>
+                                <p className="text-gray-800">Staff was very helpful and professional.</p>
                                 <span className="text-sm text-gray-500">- Alex H.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Best experience I’ve had in a long time!"</p>
+                                <p className="text-gray-800">Best experience I’ve had in a long time!</p>
                                 <span className="text-sm text-gray-500">- Olivia M.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Good value for money. Would visit again!"</p>
+                                <p className="text-gray-800">Good value for money. Would visit again!</p>
                                 <span className="text-sm text-gray-500">- Daniel P.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Nice and clean place. Five stars!"</p>
+                                <p className="text-gray-800">Nice and clean place. Five stars!</p>
                                 <span className="text-sm text-gray-500">- Sophia K.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Fast service and very polite staff!"</p>
+                                <p className="text-gray-800">Fast service and very polite staff!</p>
                                 <span className="text-sm text-gray-500">- Liam J.</span>
                             </div>
 
                             <div className="p-4 border rounded-lg bg-white shadow-sm">
-                                <p className="text-gray-800">"Absolutely loved it. Highly recommended!"</p>
+                                <p className="text-gray-800">Absolutely loved it. Highly recommended!</p>
                                 <span className="text-sm text-gray-500">- Chloe B.</span>
                             </div>
                         </div>

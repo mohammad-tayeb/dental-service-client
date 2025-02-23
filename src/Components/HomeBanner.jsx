@@ -2,6 +2,7 @@ import banner from '../assets/Rectangle 1.png'
 import doctorBanner from '../assets/Group 34991.png'
 import tablet1 from '..//assets/Group 7.png'
 import tablet2 from '..//assets/Group 6.png'
+import { Link } from 'react-router-dom';
 const HomeBanner = () => {
     return (
         <div>
@@ -12,7 +13,7 @@ const HomeBanner = () => {
                 <div className='flex flex-col justify-center md:text-start text-center md:items-start items-center space-y-3 md:w-1/2 text-white'>
                     <h1 className='md:text-5xl text-2xl font-bold'>Your Best Medical Help Center</h1>
                     <p>Expert dental care with precision, ensuring healthy smiles using advanced treatments and trusted techniques.</p>
-                    <button className='btn btn-ghost bg-[#F7A582] text-white'>All Services</button>
+                    <Link to="/allServices" className='btn btn-ghost bg-[#F7A582] text-white'>All Services</Link>
                 </div>
                 <div className='md:mt-0 mt-10 md:w-1/2'>
                     <img src={doctorBanner} alt="" />

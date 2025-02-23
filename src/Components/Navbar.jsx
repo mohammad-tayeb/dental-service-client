@@ -2,11 +2,13 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/Group 2.png';
 import { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import useAdmin from './Hooks/useAdmin';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const [isAdmin] = useAdmin()
     return (
-        <div className="navbar fixed top-0 left-0 w-full bg-opacity-40 max-w-screen-xl text-white p-3 z-50 h-20 flex items-center justify-between">
+        <div className="navbar fixed bg-black top-0 left-0 w-full bg-opacity-20 max-w-screen-xl text-white p-3 z-50 h-10 flex items-center justify-between pt-8">
             <div className="navbar-start">
                 <div className="dropdown -mt-5">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -46,6 +48,18 @@ const Navbar = () => {
                                 ABOUT
                             </NavLink>
                         </li>
+                        { 
+                           isAdmin && <li>
+                            <NavLink
+                                to='/about'
+                                className={({ isActive }) =>
+                                    isActive ? "font-bold text-white bg-[#F7A582]" : "text-white"
+                                }
+                            >
+                               ADMIN DASHBOARD
+                            </NavLink>
+                        </li>
+                        }
                         <li>
                             <NavLink
                                 to='/appointment'
@@ -56,6 +70,30 @@ const Navbar = () => {
                                 APPOINTMENT
                             </NavLink>
                         </li>
+                        <li>
+                            {
+                                user ? <NavLink
+                                    to="/myAppointments"
+                                    className={({ isActive }) =>
+                                        isActive ? "text-white bg-none" : "text-white"
+                                    }
+                                >
+                                    MY APPOINMENTS
+                                </NavLink> : null
+                            }
+                        </li>
+                        {
+                            user?.role == 'admin' ? <li>
+                                <NavLink
+                                    to='/adminDashboard/dashboard'
+                                    className={({ isActive }) =>
+                                        isActive ? "text-white bg-none" : "text-white"
+                                    }
+                                >
+                                    DASHBOARD
+                                </NavLink>
+                            </li> : null
+                        }
                         <li>
                             {
                                 user ? <NavLink
@@ -84,7 +122,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Navbar */}
-            <div className="navbar-end hidden lg:flex">
+            <div className="w-full items-center justify-end  hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 -mt-5 me-4">
                     <li>
                         <NavLink
@@ -106,6 +144,18 @@ const Navbar = () => {
                             ABOUT
                         </NavLink>
                     </li>
+                    { 
+                           isAdmin && <li>
+                            <NavLink
+                                to='/adminDashboard/dashboard'
+                                className={({ isActive }) =>
+                                    isActive ? "font-bold text-white bg-[#F7A582]" : "text-white"
+                                }
+                            >
+                               ADMIN DASHBOARD
+                            </NavLink>
+                        </li>
+                        }
                     <li>
                         <NavLink
                             to='/appointment'
@@ -116,6 +166,31 @@ const Navbar = () => {
                             APPOINTMENT
                         </NavLink>
                     </li>
+                    {
+                        user ? <li>
+                            <NavLink
+                                to="/myAppointments"
+                                className={({ isActive }) =>
+                                    isActive ? "text-white bg-none" : "text-white"
+                                }
+                            >
+                                MY APPOINMENTS
+                            </NavLink>
+
+                        </li> : null
+                    }
+                    {
+                        user?.role == 'admin' ? <li>
+                            <NavLink
+                                to="/adminDashboard"
+                                className={({ isActive }) =>
+                                    isActive ? "text-white bg-none" : "text-white"
+                                }
+                            >
+                                DASHBOARD
+                            </NavLink>
+                        </li> : null
+                    }
                     <li>
                         {
                             user ? <NavLink
@@ -138,7 +213,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         {
-                            user && <p className='text-xs text-[#F7A582]'>{user.email}</p>
+                            user ? <p className='text-xs text-[#F7A582]'>{user.displayName}</p> : null
                         }
                     </li>
                 </ul>
