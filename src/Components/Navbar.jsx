@@ -48,17 +48,17 @@ const Navbar = () => {
                                 ABOUT
                             </NavLink>
                         </li>
-                        { 
-                           isAdmin && <li>
-                            <NavLink
-                                to='/about'
-                                className={({ isActive }) =>
-                                    isActive ? "font-bold text-white bg-[#F7A582]" : "text-white"
-                                }
-                            >
-                               ADMIN DASHBOARD
-                            </NavLink>
-                        </li>
+                        {
+                            isAdmin && <li>
+                                <NavLink
+                                    to='/about'
+                                    className={({ isActive }) =>
+                                        isActive ? "font-bold text-white bg-[#F7A582]" : "text-white"
+                                    }
+                                >
+                                    ADMIN DASHBOARD
+                                </NavLink>
+                            </li>
                         }
                         <li>
                             <NavLink
@@ -71,16 +71,14 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            {
-                                user ? <NavLink
-                                    to="/myAppointments"
-                                    className={({ isActive }) =>
-                                        isActive ? "text-white bg-none" : "text-white"
-                                    }
-                                >
-                                    MY APPOINMENTS
-                                </NavLink> : null
-                            }
+                            <NavLink
+                                to="/myAppointments"
+                                className={({ isActive }) =>
+                                    isActive ? "text-white bg-[#F7A582]" : "text-white"
+                                }
+                            >
+                                MY APPOINMENTS
+                            </NavLink>
                         </li>
                         {
                             user?.role == 'admin' ? <li>
@@ -144,18 +142,18 @@ const Navbar = () => {
                             ABOUT
                         </NavLink>
                     </li>
-                    { 
-                           isAdmin && <li>
+                    {
+                        isAdmin && <li>
                             <NavLink
                                 to='/adminDashboard/dashboard'
                                 className={({ isActive }) =>
                                     isActive ? "font-bold text-white bg-[#F7A582]" : "text-white"
                                 }
                             >
-                               ADMIN DASHBOARD
+                                ADMIN DASHBOARD
                             </NavLink>
                         </li>
-                        }
+                    }
                     <li>
                         <NavLink
                             to='/appointment'
@@ -166,19 +164,16 @@ const Navbar = () => {
                             APPOINTMENT
                         </NavLink>
                     </li>
-                    {
-                        user ? <li>
-                            <NavLink
-                                to="/myAppointments"
-                                className={({ isActive }) =>
-                                    isActive ? "text-white bg-none" : "text-white"
-                                }
-                            >
-                                MY APPOINMENTS
-                            </NavLink>
-
-                        </li> : null
-                    }
+                    <li>
+                        <NavLink
+                            to="/myAppointments"
+                            className={({ isActive }) =>
+                                isActive ? "text-white bg-[#F7A582]" : "text-white"
+                            }
+                        >
+                            MY APPOINMENTS
+                        </NavLink>
+                    </li>
                     {
                         user?.role == 'admin' ? <li>
                             <NavLink

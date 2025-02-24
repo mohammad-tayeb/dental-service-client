@@ -11,21 +11,11 @@ const ExpertDoctorCard = () => {
                 .then(res => {
                     const threeDoctors = res.data.slice(0, 3);
                     setDoctors(threeDoctors);
-                    console.log(threeDoctors);
                 })
                 .catch(error => {
                     console.log("Error fetching doctors:", error);
                 });
         }, [axiosPublic]);
-        // useEffect(() => {
-        //     fetch('http://localhost:5000/doctors')
-        //         .then(res => res.json())
-        //         .then(data => {
-        //             const threeDoctors = data.slice(0,3)
-        //             setDoctors(threeDoctors)
-        //             console.log(threeDoctors)
-        //         })
-        // }, [])
         return (
             <div className="grid md:grid-cols-3 grid-cols-1 gap-10 mx-10 mt-10">
                 {

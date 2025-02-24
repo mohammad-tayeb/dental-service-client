@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet-async";
 
 const MyAppointments = () => {
     const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const [myAppointment, setMyAppointment] = useState(null);
     const [value, setValue] = useState(new Date());
     const { selectedDate, setSelectedDate } = useContext(DateContext);
     const axiosSecure = useAxiosSecure()
@@ -29,11 +30,30 @@ const MyAppointments = () => {
         },
     });
 
+    const [guestAppointments, setGuestAppointments] = useState([]);
+
+
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // Load guest appointments from localStorage
+        const storedAppointments = JSON.parse(localStorage.getItem("guestAppointments")) || [];
+
+        // ✅ Filter appointments that match the selected date
+        const filteredGuestAppointments = storedAppointments.filter(appointment =>
+            appointment.selectedDate === value.toDateString()
+        );
+
+        setGuestAppointments(filteredGuestAppointments); // Set filtered guest appointments
+        setSelectedDate(value.toDateString()); // Update selected date
+
+        // ✅ Ensure myAppointment updates correctly
+        if (!user) {
+            setMyAppointment(filteredGuestAppointments);
+        } else {
+            setMyAppointment(appointments);
+        }
         setSelectedDate(value.toDateString());
 
-    }, [value, setSelectedDate])
+    }, [value, setSelectedDate, user, appointments, guestAppointments])
 
     return (
         <div>
@@ -68,8 +88,8 @@ const MyAppointments = () => {
                         </tr>
                     </thead>
                     {
-                        appointments.length !== 0 ? <tbody>
-                            {appointments.map((appointment, idx) => (
+                        myAppointment?.length !== 0 ? <tbody>
+                            {myAppointment?.map((appointment, idx) => (
                                 <tr key={idx}>
                                     <th>{idx + 1}</th>
                                     <td>{appointment.name}</td>
@@ -81,7 +101,7 @@ const MyAppointments = () => {
                                     </td>
                                 </tr>
                             ))}
-                        </tbody> : <tbody className="text-center p-10 text-red-600"><tr><td colSpan="6">You Do Not Have Any Appointments</td></tr></tbody>
+                        </tbody> : <tbody className="text-center p-10 text-red-600"><tr><td colSpan="6">You Do Not Have Any Appointments On <span className="font-bold">{selectedDate}</span></td></tr></tbody>
                     }
                 </table>
             </div>

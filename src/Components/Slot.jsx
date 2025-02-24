@@ -29,28 +29,45 @@ const Slot = () => {
         const email = form.email.value;
         const serviceName = selectedService.name
         const serviceSchedle = selectedService.schedule
-        const userInfo = { name, email, serviceName, serviceSchedle, selectedDate}
+        const userInfo = { name, email, serviceName, serviceSchedle, selectedDate }
         console.log(userInfo)
-        axiosPublic.post('/appointments', userInfo)
-            .then(res => {
-                console.log(res.data)
-                if (res.data.insertedId) {
-                    document.getElementById('my_modal_1').close(); // Close the modal
-                    Swal.fire({
-                        title: "Appointment Scheduled!",
-                        icon: "success",
-                        draggable: true
-                    });
-                    form.reset();
-                }
-                else {
-                    document.getElementById('my_modal_1').close(); // Close the modal
-                    Swal.fire({
-                        icon: "warning",
-                        text: `${res.data.message}`,
-                    });
-                }
-            })
+        if (user) {
+            axiosPublic.post('/appointments', userInfo)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.insertedId) {
+                        document.getElementById('my_modal_1').close(); // Close the modal
+                        Swal.fire({
+                            title: "Appointment Scheduled!",
+                            icon: "success",
+                            draggable: true
+                        });
+                        form.reset();
+                    }
+                    else {
+                        document.getElementById('my_modal_1').close(); // Close the modal
+                        Swal.fire({
+                            icon: "warning",
+                            text: `${res.data.message}`,
+                        });
+                    }
+                })
+        }
+        else {
+            // User is not logged in, store in localStorage
+            const existingAppointments = JSON.parse(localStorage.getItem("guestAppointments")) || [];
+            existingAppointments.push(userInfo);
+            localStorage.setItem("guestAppointments", JSON.stringify(existingAppointments));
+
+            Swal.fire({
+                title: "Appointment Saved Locally!",
+                text: "Log in to save it to your account.",
+                icon: "info",
+            });
+
+            form.reset();
+            document.getElementById('my_modal_1').close();
+        }
     }
     return (
         <div className="mt-20 text-center">

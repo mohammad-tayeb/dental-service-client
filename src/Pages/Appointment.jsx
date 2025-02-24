@@ -23,6 +23,11 @@ const Appointment = () => {
     const { selectedDate, setSelectedDate } = useContext(DateContext);
     setSelectedDate(value.toDateString())
     console.log(selectedDate)
+    const [activeLink, setActiveLink] = useState(null);
+
+    const handleClick = (link) => {
+        setActiveLink(link);
+    };
     return (
         <div>
             <img className='md:h-[500px] h-[254px]' src={rs} alt="" />
@@ -51,46 +56,68 @@ const Appointment = () => {
                 {/* services */}
                 <div className="flex flex-col items-center justify-center mt-10">
                     <div className="grid md:grid-cols-3 grid-cols-2 md:gap-10 gap-5 mx-5 md:mx-0">
-                        <Link to={`/appointment/TeethOrthodontics`} className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:bg-[#F7A582]">
-                           <div className='flex justify-center items-center p-2'>
-                           <img src={ic1} className="w-16 h-16 me-3" />
-                           <p className="mt-2 font-bold text-gray-700 text-1xl">Teeth Orthodontics</p>
-                           </div>
-                        </Link>
-
-                        <div  className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:bg-[#F7A582]">
-                           <Link to={`/appointment/OralSurgery`} className='flex justify-center items-center p-2'>
-                           <img src={ic6} alt="Oral Surgery" className="w-16 h-12 me-3" />
-                            <p className="mt-2 font-bold text-gray-700 text-1xl">Oral Surgery</p>
-                           </Link>
+                        <div className="p-4">
+                            <Link
+                                to="/appointment/TeethOrthodontics"
+                                onClick={() => handleClick("TeethOrthodontics")}
+                                className={`flex flex-col items-center p-4 rounded-lg shadow-md transition-all ${activeLink === "TeethOrthodontics" ? "bg-[#F7A582] text-white" : "bg-white text-gray-700"
+                                    }`}
+                            >
+                                <div className="flex justify-center items-center p-2">
+                                    <img src={ic1} className="w-16 h-16 me-3" />
+                                    <p className="mt-2 font-bold text-1xl">Teeth Orthodontics</p>
+                                </div>
+                            </Link>
                         </div>
 
-                        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:bg-[#F7A582]">
-                           <Link to={`/appointment/PediatricDental`} className='flex justify-center items-center p-2'>
-                           <img src={ic5} alt="Pediatric Dental" className="w-16 h-12 me-3" />
-                           <p className="mt-2 font-bold text-gray-700 text-1xl">Pediatric Dental</p>
-                           </Link>
+                        <div className="p-4">
+                            <Link
+                                onClick={() => handleClick("OralSurgery")}
+                                to={`/appointment/OralSurgery`} className={`flex flex-col items-center p-4 rounded-lg shadow-md transition-all ${activeLink === "OralSurgery" ? "bg-[#F7A582] text-white" : "bg-white text-gray-700"
+                                    }`}>
+                                <img src={ic6} alt="Oral Surgery" className="w-16 h-12 me-3" />
+                                <p className="mt-2 font-bold text-1xl">Oral Surgery</p>
+                            </Link>
                         </div>
 
-                        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:bg-[#F7A582]">
-                           <Link to={`/appointment/CavityProtection`} className='flex justify-center items-center p-2'>
-                           <img src={ic4} className="w-16 h-12 me-3" />
-                           <p className="mt-2 font-bold text-gray-700 text-1xl">Cavity Protection</p>
-                           </Link>
+                        <div className="p-4">
+                            <Link
+                                onClick={() => handleClick("PediatricDental")}
+                                to={`/appointment/PediatricDental`} className={`flex flex-col items-center p-4 rounded-lg shadow-md transition-all ${activeLink === "PediatricDental" ? "bg-[#F7A582] text-white" : "bg-white text-gray-700"
+                                    }`}>
+                                <img src={ic5} alt="Pediatric Dental" className="w-16 h-12 me-3" />
+                                <p className="mt-2 font-bold text-1xl">Pediatric Dental</p>
+                            </Link>
                         </div>
 
-                        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:bg-[#F7A582]">
-                           <Link to={`/appointment/TeethCleaning`} className='flex justify-center items-center p-2'>
-                           <img src={ic3} alt="Teeth Cleaning" className="w-16 h-12 me-3" />
-                            <p className="mt-2 font-bold text-gray-700 text-1xl">Teeth Cleaning</p>
-                           </Link>
+                        <div className="p-4">
+                            <Link
+                                onClick={() => handleClick("CavityProtection")}
+                                to={`/appointment/CavityProtection`} className={`flex flex-col items-center p-4 rounded-lg shadow-md transition-all ${activeLink === "CavityProtection" ? "bg-[#F7A582] text-white" : "bg-white text-gray-700"
+                                    }`}>
+                                <img src={ic4} className="w-16 h-12 me-3" />
+                                <p className="mt-2 font-bold text-1xl">Cavity Protection</p>
+                            </Link>
                         </div>
 
-                        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:bg-[#F7A582]">
-                           <Link to={`/appointment/CosmeticDentistry`} className='flex justify-center items-center p-2'>
-                           <img src={ic2} className="w-16 h-12 me-3" />
-                           <p className="mt-2 font-bold text-gray-700 text-1xl">Cosmetic Dentistry</p>
-                           </Link>
+                        <div className="p-4">
+                            <Link
+                                onClick={() => handleClick("TeethCleaning")}
+                                to={`/appointment/TeethCleaning`} className={`flex flex-col items-center p-4 rounded-lg shadow-md transition-all ${activeLink === "TeethCleaning" ? "bg-[#F7A582] text-white" : "bg-white text-gray-700"
+                                    }`}>
+                                <img src={ic3} alt="Teeth Cleaning" className="w-16 h-12 me-3" />
+                                <p className="mt-2 font-bold text-1xl">Teeth Cleaning</p>
+                            </Link>
+                        </div>
+
+                        <div className="p-4">
+                            <Link
+                                onClick={() => handleClick("CosmeticDentistry")}
+                                to={`/appointment/CosmeticDentistry`} className={`flex flex-col items-center p-4 rounded-lg shadow-md transition-all ${activeLink === "CosmeticDentistry" ? "bg-[#F7A582] text-white" : "bg-white text-gray-700"
+                                    }`}>
+                                <img src={ic2} className="w-16 h-12 me-3" />
+                                <p className="mt-2 font-bold text-1xl">Cosmetic Dentistry</p>
+                            </Link>
                         </div>
                     </div>
                     <Outlet></Outlet>
